@@ -1,28 +1,21 @@
-import pandas as pd
-from fastapi import FastAPI, File, UploadFile
-import plotly.express as px
-from io import StringIO
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from rotas import router
 
 app = FastAPI()
+app.include_router(router)
 
-@app.get("/")
-def read_root():
-    return {"mensagem:": "Api Funcionando"}
+origins = [
+    "http://localhost:4200",
+]
 
-@app.post("/uploadfile/")
-async def upload_csv(file: UploadFile = File(...)):
-    if file.content_type != 'text/csv':
-        return {"Erro": "O Arquivo para upload deve ser .csv"}
-    
-    content = await file.read()
-    try:
-        df = pd.read_csv(StringIO(content.decode('utf-8')))
-        return{
-            "colunas": df.columns.tolist(),
-            "linhas":len(df)
-        }
-    except Exception as e:
-        return{"Error": f"Erro ao ler CSV:{str(e)}"}
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-
-
+# Inclua o router das suas rotas
+app.include_router(router)

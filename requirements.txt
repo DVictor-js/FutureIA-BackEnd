@@ -1,3 +1,7 @@
-pandas
 fastapi[all]
+uvicorn
+pandas
+scikit-learn
+python-multipart
+statsmodels
 
