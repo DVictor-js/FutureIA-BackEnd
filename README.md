@@ -1,4 +1,4 @@
-﻿# FutureIA-BackEnd
+﻿# FutureIA-BackEnd (Primeira Fase De Desenvolvimento)
 
 Para rodar o back-end digite:
 python run.py
